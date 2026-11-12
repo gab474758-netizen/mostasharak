@@ -1,0 +1,1216 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<meta name="theme-color" content="#142B4A">
+<meta name="description" content="مستشارك — مساعد أولي لفهم المواقف القانونية في مصر وتنظيم المعلومات والخطوات التالية.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+</head><body>
+<title>مستشارك</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Kufi+Arabic:wght@500;700&display=swap">
+<style>
+/* Layout concept: single centered column, one decision per screen, wide touch targets, results as stacked sections. */
+:root {
+  --paper: #F4F2EC;
+  --surface: #FFFFFF;
+  --ink: #14243D;
+  --ink-2: #4B5C6B;
+  --line: #DDD6C5;
+  --accent: #142B4A;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #F3E8C9;
+  --gold: #C49A3A;
+  --gold-deep: #A77B20;
+  --gold-ink: #172B46;
+  --alert: #7D5410;
+  --alert-soft: #F7EEDC;
+  --font-display: 'Noto Kufi Arabic', 'IBM Plex Sans Arabic', Tahoma, sans-serif;
+  --font-body: 'IBM Plex Sans Arabic', Tahoma, 'Segoe UI', sans-serif;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #111D2D; --surface: #1A2A40; --ink: #F2F4F7; --ink-2: #B9C3D0; --line: #34465D;
+    --accent: #D0A849; --accent-ink: #172B46; --accent-soft: #3A3427; --gold: #D0A849; --gold-deep: #E0BD6B; --gold-ink: #172B46; --alert: #E4B96C; --alert-soft: #302819;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #111D2D; --surface: #1A2A40; --ink: #F2F4F7; --ink-2: #B9C3D0; --line: #34465D;
+  --accent: #D0A849; --accent-ink: #172B46; --accent-soft: #3A3427; --gold: #D0A849; --gold-deep: #E0BD6B; --gold-ink: #172B46; --alert: #E4B96C; --alert-soft: #302819;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--font-body); font-size: 17px; line-height: 1.75;
+  direction: rtl;
+  padding-block: 18px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.shell { max-width: 760px; margin-inline: auto; display: flex; flex-direction: column; gap: 22px; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.5; margin: 0; text-wrap: balance; color: var(--ink); }
+h1 { font-size: clamp(1.5rem, 4.6vw, 2rem); font-weight: 700; }
+h2 { font-size: 1.15rem; font-weight: 700; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+[tabindex="-1"]:focus { outline: none; }
+
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: var(--ink); background: none; border: 0; padding: 4px; cursor: pointer; }
+.brand svg { width: 30px; height: 30px; }
+.pill { font-size: 0.82rem; padding: 4px 12px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 600; border: 1px solid var(--gold); }
+
+.view { display: flex; flex-direction: column; gap: 22px; animation: rise .22s ease-out; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .view { animation: none; } * { transition: none !important; } }
+
+.lead { color: var(--ink-2); font-size: 1.05rem; max-width: 60ch; }
+.stack { display: flex; flex-direction: column; gap: 14px; }
+
+.btn {
+  font: inherit; font-weight: 600; min-height: 58px; padding: 12px 20px; border-radius: var(--radius);
+  border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: 14px; text-align: start; width: 100%;
+  transition: border-color .15s, background .15s;
+}
+.btn:hover { border-color: var(--accent); }
+.btn small { display: block; font-weight: 400; color: var(--ink-2); font-size: 0.9rem; line-height: 1.5; margin-top: 2px; }
+.btn-primary { background: var(--gold); color: var(--gold-ink); border-color: var(--gold); box-shadow: 0 4px 12px rgba(20,43,74,.10); }
+.btn-primary small { color: var(--gold-ink); opacity: .9; }
+.btn-primary:hover { border-color: var(--gold-deep); background: var(--gold-deep); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+.btn .arrow { flex: none; width: 22px; height: 22px; }
+.btn-inline { width: auto; justify-content: center; min-height: 50px; }
+.link { background: none; border: 0; padding: 6px 2px; font: inherit; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 4px; align-self: flex-start; }
+.back { display: inline-flex; align-items: center; gap: 6px; background: none; border: 0; padding: 6px 2px; font: inherit; color: var(--ink-2); cursor: pointer; align-self: flex-start; }
+.back:hover { color: var(--ink); }
+
+.home-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.home-tile { min-height:105px; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:15px; display:flex; flex-direction:column; justify-content:space-between; gap:8px; text-decoration:none; color:var(--ink); cursor:pointer; font:inherit; text-align:right; }
+.home-tile strong {font-family:var(--font-display);font-size:1rem;color:var(--accent)}
+.home-tile {border-top:3px solid var(--gold)}
+.summary-highlight {background:linear-gradient(135deg,var(--accent),#203E63);color:#fff;border:1px solid var(--gold);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.summary-highlight h2,.summary-highlight strong {color:#F2D58B}
+.summary-highlight p {color:#fff}
+.answer-list {display:flex;flex-direction:column;gap:10px}
+.answer-item {border-bottom:1px solid var(--line);padding:8px 0}
+.answer-item:last-child {border-bottom:0}
+.answer-item strong {display:block;color:var(--ink-2);font-size:.9rem;margin-bottom:3px}
+.answer-item span {display:block;color:var(--ink);font-weight:600}
+.home-tile small {color:var(--ink-2);font-size:.85rem}
+.searchbox {display:flex;gap:8px;align-items:center;background:var(--surface);border:1.5px solid var(--line);border-radius:15px;padding:8px 12px}
+.searchbox input {flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;padding:8px}
+.section-head {display:flex;align-items:center;justify-content:space-between;gap:10px}
+.chips {display:flex;flex-wrap:wrap;gap:8px}
+.chip {border:1px solid var(--line);border-radius:999px;padding:7px 12px;background:var(--surface);color:var(--ink);font:inherit;cursor:pointer}
+.cats { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 600px) { .cats { grid-template-columns: 1fr 1fr; } }
+
+.progress { display: flex; flex-direction: column; gap: 8px; }
+.progress-meta { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--ink-2); gap: 12px; flex-wrap: wrap; }
+.track { height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; }
+.fill { height: 100%; background: var(--gold); border-radius: 999px; transition: width .3s ease; }
+
+.qcard { background: var(--surface); border: 1.5px solid var(--line); border-radius: 18px; padding: clamp(18px, 4vw, 30px); display: flex; flex-direction: column; gap: 20px; }
+.help { color: var(--ink-2); font-size: 0.95rem; }
+.opt { gap: 14px; justify-content: flex-start; font-weight: 500; }
+.opt .dot { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line); }
+.opt:hover .dot { border-color: var(--accent); }
+.opt.sel { border-color: var(--accent); background: var(--accent-soft); }
+.opt.sel .dot { border-color: var(--accent); background: radial-gradient(var(--accent) 45%, transparent 50%); }
+
+textarea {
+  font: inherit; width: 100%; min-height: 260px; resize: vertical; padding: 16px; line-height: 1.8;
+  border-radius: var(--radius); border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); direction: rtl;
+}
+textarea:focus { border-color: var(--accent); outline: 3px solid var(--accent-soft); }
+.counter { font-size: 0.88rem; color: var(--ink-2); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; min-height: 1.6em; }
+.err { color: var(--alert); }
+details.tips { background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 12px 16px; }
+details.tips summary { cursor: pointer; font-weight: 600; }
+details.tips ul { margin: 10px 0 2px; padding-inline-start: 22px; color: var(--ink-2); }
+
+.notice { background: var(--alert-soft); color: var(--alert); border-radius: var(--radius); padding: 14px 16px; font-size: 0.95rem; line-height: 1.7; }
+.demo-note { background: var(--accent-soft); color: var(--ink); border-radius: var(--radius); padding: 12px 16px; font-size: 0.92rem; color: var(--ink-2); }
+
+.sec { background: var(--surface); border: 1.5px solid var(--line); border-radius: 18px; padding: clamp(18px, 4vw, 26px); display: flex; flex-direction: column; gap: 12px; }
+.sec ul, .sec ol { margin: 0; padding-inline-start: 22px; display: flex; flex-direction: column; gap: 8px; }
+.sec li::marker { color: var(--gold-deep); }
+.sec .sub { font-size: 0.92rem; color: var(--ink-2); }
+.quote { border-inline-start: 4px solid var(--accent); padding: 4px 14px; color: var(--ink-2); background: var(--paper); border-radius: 6px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.class-main { font-size: 1.15rem; font-weight: 700; color: var(--accent); border-inline-start: 4px solid var(--gold); padding-inline-start: 12px; }
+.missing li { list-style: none; position: relative; padding-inline-start: 4px; }
+.missing { padding-inline-start: 0 !important; }
+.missing li::before { content: "؟"; display: inline-block; width: 1.5em; font-weight: 700; color: var(--accent); }
+.check { display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; border-radius: 10px; cursor: pointer; border: 1px solid transparent; }
+.check:hover { background: var(--paper); }
+.check input { width: 22px; height: 22px; margin: 3px 0 0; accent-color: var(--accent); flex: none; }
+.checks { display: flex; flex-direction: column; gap: 2px; }
+.disclaimer { border: 2px solid var(--alert); border-radius: 18px; padding: clamp(18px, 4vw, 26px); background: var(--alert-soft); color: var(--ink); display: flex; flex-direction: column; gap: 8px; }
+.disclaimer h2 { color: var(--alert); }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.loading { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 60px 0; color: var(--ink-2); }
+.spin { width: 38px; height: 38px; border-radius: 50%; border: 4px solid var(--line); border-top-color: var(--accent); animation: spin 0.9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spin { animation-duration: 3s; } }
+@media print { body { background:#fff !important; color:#142B4A !important; padding:0 !important; } .topbar,.actions,.back,.disclaimer { break-inside:avoid; } .btn,.back,.pill { display:none !important; } .shell { max-width:none; } .view { animation:none; } .sec,.summary-highlight { break-inside:avoid; box-shadow:none; } .summary-highlight { background:#142B4A !important; print-color-adjust:exact; -webkit-print-color-adjust:exact; } }
+</style>
+
+<div id="app" dir="rtl" lang="ar">
+  <div class="shell">
+    <header class="topbar">
+      <button class="brand" type="button" data-action="home" aria-label="العودة إلى الصفحة الرئيسية">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--accent)">
+          <path d="M16 4v22M9 27h14M6 10h20"/><path d="M6 10l-3.5 8a4 4 0 0 0 7 0L6 10zM26 10l-3.5 8a4 4 0 0 0 7 0L26 10z"/>
+        </svg>
+        مستشارك
+      </button>
+      <span class="pill">نسخة تجريبية</span>
+    </header>
+    <main id="view" aria-live="polite"></main>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   1) DEMO_DATA — بيانات تجريبية فقط (ليست قاعدة قانونية حقيقية).
+   لاحقًا يُستبدل هذا الجزء بخدمة KnowledgeService تقرأ من قاعدة المعرفة.
+   كل قسم = تعريف + شجرة أسئلة (nodes). كل خيار يحدد السؤال التالي (next).
+   خصائص الخيار: t النص، next السؤال التالي، k معلومة تمت الإجابة عنها،
+   u غير متأكد، need معلومات مطلوبة إضافية، s جملة للملخص، c تصنيف،
+   st خطوات، dc مستندات، urgent استعجال.
+   ===================================================================== */
+const o = (t, next, p = {}) => ({ t, next: next || null, ...p });
+const Q = (q, opts, help = '') => ({ q, help, opts });
+const UNSURE = (next, k) => o('لا أعرف / غير متأكد', next, { u: true, k });
+
+const DEMO_DATA = { categories: [
+
+/* ---------------- عمل ---------------- */
+{
+  id: 'work', label: 'عمل', desc: 'فصل، رواتب، عقود، مستحقات', cls: 'علاقة عمل', start: 'w1',
+  kw: ['عمل', 'وظيف', 'فصل', 'مرتب', 'راتب', 'مدير', 'استقال', 'مستحقات', 'موظف', 'صاحب العمل'],
+  reqDefs: {
+    start: { l: 'تاريخ بداية العمل ومدته', kw: ['منذ', 'بدأت', 'التحقت', 'تعيين', 'سنة', 'سنوات', 'شهر', 'أشهر'] },
+    contract: { l: 'نوع عقد العمل (مكتوب أم شفهي، محدد المدة أم غير محدد)', kw: ['عقد'] },
+    reason: { l: 'سبب إنهاء الخدمة أو الخلاف تحديدًا', kw: ['فصل', 'استقال', 'إنهاء', 'خصم', 'راتب', 'مرتب', 'مستحقات', 'إنذار'] },
+    notice: { l: 'هل يوجد إخطار مكتوب بإنهاء الخدمة؟', kw: ['إخطار', 'خطاب', 'إنذار', 'مكتوب'], tr: ['فصل', 'إنهاء', 'أنهت', 'طرد'] },
+    amount: { l: 'قيمة المبالغ المتأخرة وتواريخ استحقاقها', kw: ['جنيه', 'مبلغ', 'شهور'], tr: ['راتب', 'مرتب', 'مستحقات'] },
+    docs: { l: 'المستندات المتوفرة لديك (عقد، كشف مرتبات، رسائل)', kw: ['مستند', 'إيصال', 'كشف', 'مفردات', 'إثبات', 'رسائل', 'صور'] }
+  },
+  baseReq: ['start', 'contract', 'reason', 'docs'],
+  steps: [
+    'اجمع كل ما يثبت علاقة العمل: العقد، كشوف المرتبات، الرسائل، وأي صور أو إيصالات.',
+    'اكتب تسلسلًا زمنيًا مختصرًا بالوقائع وتواريخها وأسماء من حضرها.',
+    'احتفظ بنسخ من أي رسائل أو مراسلات مع جهة العمل ولا تحذفها.',
+    'قد يفيدك الاستفسار عن الجهة المختصة بشكاوى العمل في منطقتك قبل اتخاذ أي خطوة رسمية.',
+    'يُفضّل عرض الموقف على محامٍ متخصص في قضايا العمل قبل التوقيع على أي ورقة أو تسوية.'
+  ],
+  docs: ['عقد العمل (إن وُجد)', 'كشوف المرتبات أو إيصالات استلام الراتب', 'المراسلات مع جهة العمل (رسائل، بريد إلكتروني)', 'بطاقة الرقم القومي', 'إثبات التأمينات الاجتماعية (إن وُجد)'],
+  nodes: {
+    w1: Q('ما الذي يصف موقفك الأقرب؟', [
+      o('تم إنهاء عملي', 'w2', { k: 'reason', need: ['notice'], c: 'إنهاء خدمة في علاقة عمل', s: 'ذكرت أنه تم إنهاء عملك.' }),
+      o('لم أحصل على راتبي أو مستحقاتي', 'w3', { k: 'reason', need: ['amount'], c: 'مستحقات مالية في علاقة عمل', s: 'ذكرت وجود تأخر أو نقص في الراتب أو المستحقات.' }),
+      o('أفكر في إنهاء العمل بنفسي', 'w4', { k: 'reason', c: 'إنهاء علاقة عمل بإرادتك', s: 'ذكرت أنك تفكر في إنهاء العمل بنفسك.' }),
+      o('خلاف آخر مع جهة العمل', 'w5', { k: 'reason', c: 'خلاف في علاقة عمل', s: 'ذكرت وجود خلاف مع جهة العمل.' })
+    ], 'اختر الأقرب حتى لو لم يكن مطابقًا تمامًا.'),
+    w2: Q('كيف تم إبلاغك بإنهاء العمل؟', [
+      o('بإخطار مكتوب', 'w5', { k: 'notice', s: 'تم إبلاغك بإنهاء العمل كتابةً.' }),
+      o('شفهيًا فقط', 'w5', { k: 'notice', s: 'تم إبلاغك بإنهاء العمل شفهيًا فقط.', st: ['اطلب من جهة العمل إخطارًا كتابيًا بقرار الإنهاء وسببه، واحتفظ بدليل الطلب.'] }),
+      o('لم أُبلَّغ، ومُنعت من العمل', 'w5', { k: 'notice', urgent: true, s: 'ذكرت أنك مُنعت من العمل دون إبلاغ رسمي.', st: ['وثّق أي محاولة لدخول مكان العمل أو التواصل مع جهة العمل بعد الإنهاء، بالتاريخ والتوقيت.'] })
+    ]),
+    w3: Q('ما الذي لم تحصل عليه؟', [
+      o('الراتب الشهري', 'w5', { s: 'المتأخر لديك هو الراتب الشهري.', st: ['سجّل المبالغ المتأخرة بالشهر والقيمة، وما سبق أن استلمته.'] }),
+      o('بدلات أو مكافآت', 'w5', { s: 'المتأخر لديك بدلات أو مكافآت.', st: ['سجّل المبالغ المتأخرة بالشهر والقيمة، وما سبق أن استلمته.'] }),
+      o('مستحقات نهاية الخدمة', 'w5', { s: 'المتأخر لديك مستحقات نهاية الخدمة.', st: ['سجّل المبالغ المتأخرة بالشهر والقيمة، وما سبق أن استلمته.'] }),
+      o('أكثر من نوع مما سبق', 'w5', { s: 'المتأخر لديك أكثر من نوع من المستحقات.', st: ['سجّل المبالغ المتأخرة بالشهر والقيمة، وما سبق أن استلمته.'] })
+    ]),
+    w4: Q('هل ما زلت داخل مدة عقد محدد؟', [
+      o('نعم، عقدي محدد المدة ولم ينتهِ', 'w5', { s: 'عقدك محدد المدة ولم ينتهِ بعد.', st: ['راجع بنود إنهاء العقد قبل تقديم أي استقالة مكتوبة.'] }),
+      o('لا، عقدي غير محدد المدة', 'w5', { s: 'عقدك غير محدد المدة.' }),
+      UNSURE('w5')
+    ]),
+    w5: Q('هل لديك عقد عمل؟', [
+      o('نعم، عقد مكتوب', 'w6', { k: 'contract', s: 'يوجد لديك عقد عمل مكتوب.' }),
+      o('لا، الاتفاق كان شفهيًا', 'w6', { k: 'contract', s: 'الاتفاق على العمل كان شفهيًا.', dc: ['أي دليل على العمل: رسائل، تحويلات، أسماء زملاء أو شهود'] }),
+      UNSURE('w6', 'contract')
+    ]),
+    w6: Q('كم استمر عملك لدى هذه الجهة تقريبًا؟', [
+      o('أقل من سنة', 'w7', { k: 'start', s: 'مدة عملك أقل من سنة.' }),
+      o('من سنة إلى خمس سنوات', 'w7', { k: 'start', s: 'مدة عملك بين سنة وخمس سنوات.' }),
+      o('أكثر من خمس سنوات', 'w7', { k: 'start', s: 'مدة عملك أكثر من خمس سنوات.' }),
+      UNSURE('w7', 'start')
+    ]),
+    w7: Q('ما حالة المستندات التي لديك؟', [
+      o('لدي معظم المستندات', null, { k: 'docs', s: 'لديك معظم المستندات.' }),
+      o('لدي بعضها فقط', null, { k: 'docs', s: 'لديك بعض المستندات فقط.' }),
+      o('لا أملك مستندات', null, { u: true, k: 'docs', s: 'لا تملك مستندات حاليًا.' })
+    ])
+  }
+},
+
+/* ---------------- إيجارات وعقارات ---------------- */
+{
+  id: 'realestate', label: 'إيجارات وعقارات', desc: 'عقود إيجار، إخلاء، بيع وشراء', cls: 'نزاع متعلق بإيجار أو عقار', start: 'e1',
+  kw: ['إيجار', 'ايجار', 'مستأجر', 'مالك', 'شقة', 'عقار', 'إخلاء', 'وحدة', 'صاحب العقار', 'سمسار'],
+  reqDefs: {
+    role: { l: 'صفتك في العلاقة (مالك أو مستأجر أو مشترٍ)', kw: ['مستأجر', 'مالك', 'مشتري', 'بائع', 'أجّرت'] },
+    contract: { l: 'وجود عقد مكتوب وتاريخه ومدته', kw: ['عقد'] },
+    issue: { l: 'موضوع النزاع تحديدًا', kw: ['إخلاء', 'زيادة', 'إيجار', 'صيانة', 'تأمين', 'تأخر'] },
+    amount: { l: 'قيمة الإيجار أو المبلغ المتنازع عليه', kw: ['جنيه', 'مبلغ'], tr: ['تأخر', 'زيادة'] },
+    notice: { l: 'هل وصلك إنذار أو إعلان رسمي؟', kw: ['إنذار', 'إعلان', 'إخطار', 'دعوى'], tr: ['إخلاء', 'إنذار'] },
+    docs: { l: 'المستندات (عقد، إيصالات، مراسلات، صور العقار)', kw: ['مستند', 'إيصال', 'صور', 'مراسلات', 'إثبات'] }
+  },
+  baseReq: ['role', 'contract', 'issue', 'docs'],
+  steps: [
+    'اجمع عقد الإيجار أو البيع وكل الإيصالات والمراسلات المتعلقة بالعقار.',
+    'صوّر حالة العقار إن كان الخلاف يتعلق بالصيانة أو التلف، مع تسجيل التاريخ.',
+    'دوّن بيانات الطرف الآخر كاملة (الاسم، العنوان، وسيلة التواصل).',
+    'تجنّب الاتفاق الشفهي على أي تغيير في الإيجار أو الإخلاء دون توثيقه كتابيًا.',
+    'يُفضّل مراجعة محامٍ مختص قبل الرد على أي إنذار أو توقيع أي مخالصة.'
+  ],
+  docs: ['عقد الإيجار أو عقد البيع (ابتدائي أو مسجل)', 'إيصالات سداد الإيجار أو الأقساط', 'المراسلات والإنذارات بين الطرفين', 'مستند ملكية العقار (إن كنت المالك)', 'بطاقة الرقم القومي'],
+  nodes: {
+    e1: Q('ما صفتك في هذه المسألة؟', [
+      o('مستأجر', 'e2', { k: 'role', s: 'صفتك: مستأجر.' }),
+      o('مالك', 'e3', { k: 'role', s: 'صفتك: مالك.' }),
+      o('مشترٍ أو بائع لعقار', 'e4', { k: 'role', c: 'بيع أو شراء عقار', s: 'صفتك: طرف في بيع أو شراء عقار.' }),
+      o('صفة أخرى (جار، شريك...)', 'e5', { k: 'role', s: 'صفتك في المسألة ليست مالكًا ولا مستأجرًا.' })
+    ]),
+    e2: Q('ما المشكلة الأساسية؟', [
+      o('طلب إخلاء أو إنهاء العقد', 'e5', { k: 'issue', urgent: true, need: ['notice'], c: 'طلب إخلاء أو إنهاء عقد إيجار', s: 'ذكرت أنك تواجه طلب إخلاء أو إنهاء للعقد.', st: ['لا تتجاهل أي ورقة رسمية تصلك؛ سجّل تاريخ استلامها واحتفظ بها.'] }),
+      o('زيادة في الإيجار', 'e5', { k: 'issue', need: ['amount'], c: 'خلاف حول قيمة الإيجار', s: 'ذكرت وجود خلاف حول زيادة الإيجار.' }),
+      o('صيانة أو عيوب في العقار', 'e5', { k: 'issue', c: 'خلاف حول حالة العقار وصيانته', s: 'ذكرت وجود مشكلة في الصيانة أو عيوب في العقار.' }),
+      o('استرداد مبلغ التأمين أو المقدم', 'e5', { k: 'issue', need: ['amount'], c: 'استرداد مبالغ مدفوعة', s: 'ذكرت أنك تريد استرداد مبلغ تأمين أو مقدم.' })
+    ]),
+    e3: Q('ما المشكلة الأساسية؟', [
+      o('تأخر المستأجر في السداد', 'e5', { k: 'issue', need: ['amount'], c: 'تأخر في سداد الإيجار', s: 'ذكرت أن المستأجر تأخر في سداد الإيجار.' }),
+      o('رغبة في إنهاء العقد أو الإخلاء', 'e5', { k: 'issue', need: ['notice'], c: 'إنهاء عقد إيجار أو إخلاء', s: 'ذكرت رغبتك في إنهاء العقد أو الإخلاء.' }),
+      o('ضرر أو تلف في العقار', 'e5', { k: 'issue', c: 'ضرر في العقار', s: 'ذكرت وجود ضرر أو تلف في العقار.' })
+    ]),
+    e4: Q('في أي مرحلة أنت من التعاقد؟', [
+      o('عقد ابتدائي غير مسجل', 'e6', { k: 'contract', s: 'لديك عقد ابتدائي غير مسجل.' }),
+      o('عقد مسجل', 'e6', { k: 'contract', s: 'لديك عقد مسجل.' }),
+      o('لم يُوقَّع عقد بعد', 'e6', { k: 'contract', s: 'لم يُوقَّع عقد بعد.', st: ['لا تدفع مبالغ كبيرة قبل توثيق الاتفاق كتابيًا والتحقق من ملكية البائع.'] })
+    ]),
+    e5: Q('هل يوجد عقد مكتوب؟', [
+      o('نعم، عقد مكتوب', 'e6', { k: 'contract', s: 'يوجد عقد مكتوب.' }),
+      o('لا، الاتفاق شفهي فقط', 'e6', { k: 'contract', s: 'الاتفاق شفهي فقط.', dc: ['أي دليل على العلاقة: إيصالات سداد، رسائل، شهود'] }),
+      UNSURE('e6', 'contract')
+    ]),
+    e6: Q('هل وصلك إنذار أو إعلان رسمي؟', [
+      o('نعم', 'e7', { k: 'notice', urgent: true, s: 'ذكرت أنه وصلك إنذار أو إعلان رسمي.', st: ['احتفظ بالإنذار أو الإعلان الأصلي وسجّل تاريخ استلامه.'] }),
+      o('لا', 'e7', { k: 'notice', s: 'لم يصلك إنذار أو إعلان رسمي.' }),
+      UNSURE('e7', 'notice')
+    ]),
+    e7: Q('ما حالة المستندات التي لديك؟', [
+      o('لدي معظم المستندات', null, { k: 'docs', s: 'لديك معظم المستندات.' }),
+      o('لدي بعضها فقط', null, { k: 'docs', s: 'لديك بعض المستندات فقط.' }),
+      o('لا أملك مستندات', null, { u: true, k: 'docs', s: 'لا تملك مستندات حاليًا.' })
+    ])
+  }
+},
+
+/* ---------------- أحوال شخصية ---------------- */
+{
+  id: 'personal', label: 'أحوال شخصية', desc: 'زواج، طلاق، نفقة، حضانة، ميراث', cls: 'مسألة أسرية', start: 'p1',
+  kw: ['طلاق', 'خلع', 'زوج', 'زوجة', 'نفقة', 'حضانة', 'رؤية', 'ميراث', 'تركة', 'أطفال', 'زواج'],
+  reqDefs: {
+    topic: { l: 'موضوع المسألة تحديدًا', kw: ['طلاق', 'خلع', 'نفقة', 'حضانة', 'رؤية', 'ميراث'] },
+    marriage: { l: 'تاريخ الزواج وهل هو موثق رسميًا', kw: ['موثق', 'عقد زواج', 'مأذون', 'تزوجنا', 'تزوجت'], tr: ['طلاق', 'خلع', 'نفقة', 'حضانة', 'زوج', 'زواج'] },
+    children: { l: 'وجود أطفال وأعمارهم', kw: ['طفل', 'أطفال', 'ولد', 'بنت', 'ابن', 'ابنة'], tr: ['حضانة', 'طلاق', 'نفقة', 'رؤية'] },
+    deceased: { l: 'وثيقة الوفاة وحصر الورثة', kw: ['وفاة', 'ورثة', 'حصر'], tr: ['ميراث', 'تركة', 'توفي'] },
+    docs: { l: 'المستندات المتوفرة (عقد زواج، شهادات ميلاد، إثبات دخل)', kw: ['مستند', 'عقد زواج', 'شهادة', 'إثبات', 'وثيقة'] }
+  },
+  baseReq: ['topic', 'docs'],
+  steps: [
+    'جهّز عقد الزواج ووثائق الهوية للطرفين إن أمكن.',
+    'دوّن تواريخ الأحداث المهمة (الزواج، الانفصال، آخر إنفاق) بأكبر قدر من الدقة.',
+    'اجمع أي إثباتات تخص الدخل أو الإنفاق أو إقامة الأطفال إن كانت المسألة تتعلق بهم.',
+    'قد يفيدك الاستفسار عن مكاتب تسوية المنازعات الأسرية في منطقتك قبل رفع أي دعوى.',
+    'يُفضّل استشارة محامٍ مختص في الأحوال الشخصية قبل تقديم أي طلب رسمي.'
+  ],
+  docs: ['وثيقة عقد الزواج', 'بطاقات الرقم القومي للطرفين', 'شهادات ميلاد الأطفال (إن وُجدوا)', 'ما يثبت الدخل أو الإنفاق', 'أي إنذارات أو مراسلات رسمية سابقة'],
+  nodes: {
+    p1: Q('ما موضوع المسألة؟', [
+      o('طلاق أو خلع', 'p2', { k: 'topic', need: ['marriage'], c: 'إنهاء علاقة زوجية', s: 'موضوع المسألة: الطلاق أو الخلع.' }),
+      o('نفقة', 'p2', { k: 'topic', need: ['marriage'], c: 'نفقة أسرية', s: 'موضوع المسألة: النفقة.' }),
+      o('حضانة أو رؤية الأطفال', 'p3', { k: 'topic', need: ['marriage'], c: 'حضانة أو رؤية أطفال', s: 'موضوع المسألة: الحضانة أو الرؤية.' }),
+      o('ميراث أو تركة', 'p4', { k: 'topic', need: ['deceased'], c: 'ميراث وتركة', s: 'موضوع المسألة: ميراث أو تركة.' }),
+      o('مسألة أسرية أخرى', 'p5', { k: 'topic', need: ['marriage'], s: 'موضوع المسألة أسري لكنه خارج الخيارات المعروضة.' })
+    ]),
+    p2: Q('هل يوجد أطفال من هذا الزواج؟', [
+      o('نعم', 'p3', { s: 'يوجد أطفال من هذا الزواج.' }),
+      o('لا', 'p5', { k: 'children', s: 'لا يوجد أطفال من هذا الزواج.' })
+    ]),
+    p3: Q('ما أعمار الأطفال تقريبًا؟', [
+      o('أقل من سن المدرسة', 'p5', { k: 'children', s: 'الأطفال دون سن المدرسة.' }),
+      o('في سن المدرسة', 'p5', { k: 'children', s: 'الأطفال في سن المدرسة.' }),
+      o('بعضهم أكبر من ذلك', 'p5', { k: 'children', s: 'بعض الأطفال أكبر سنًا.' }),
+      UNSURE('p5', 'children')
+    ]),
+    p4: Q('هل لديك وثيقة وفاة وحصر ورثة؟', [
+      o('نعم، لدي الاثنان', 'p7', { k: 'deceased', s: 'لديك وثيقة الوفاة وحصر الورثة.' }),
+      o('لدي بعضها فقط', 'p7', { k: 'deceased', u: true, s: 'لديك بعض وثائق التركة فقط.' }),
+      o('لا، لا أملك أيًا منهما', 'p7', { u: true, k: 'deceased', s: 'لا تملك وثيقة وفاة أو حصر ورثة حاليًا.' })
+    ]),
+    p5: Q('هل الزواج موثق رسميًا؟', [
+      o('نعم، موثق', 'p6', { k: 'marriage', s: 'الزواج موثق رسميًا.' }),
+      o('لا، عرفي أو غير موثق', 'p6', { k: 'marriage', s: 'الزواج غير موثق رسميًا.', st: ['وضع الزواج غير الموثق قد يؤثر على الإجراءات؛ اسأل محاميًا عنه قبل أي خطوة.'] }),
+      UNSURE('p6', 'marriage')
+    ]),
+    p6: Q('هل هناك عنف أو خطر على سلامتك أو سلامة الأطفال؟', [
+      o('نعم', 'p7', { urgent: true, s: 'ذكرت وجود خطر على سلامتك أو سلامة الأطفال.', st: ['إذا كنت في خطر مباشر فاتصل بالشرطة على 122 أو اطلب مساعدة من شخص تثق به فورًا.'] }),
+      o('لا', 'p7', { s: 'لم تذكر وجود عنف أو خطر.' }),
+      o('أفضّل عدم الإجابة', 'p7')
+    ], 'هذا السؤال يساعد في تحديد مدى الاستعجال فقط.'),
+    p7: Q('ما حالة المستندات التي لديك؟', [
+      o('لدي معظم المستندات', null, { k: 'docs', s: 'لديك معظم المستندات.' }),
+      o('لدي بعضها فقط', null, { k: 'docs', s: 'لديك بعض المستندات فقط.' }),
+      o('لا أملك مستندات', null, { u: true, k: 'docs', s: 'لا تملك مستندات حاليًا.' })
+    ])
+  }
+},
+/* ---------------- مدني ---------------- */
+{
+  id: 'civil', label: 'مدني', desc: 'ديون، تعويضات، عقود، ملكية', cls: 'نزاع مدني', start: 'c1',
+  kw: ['دين', 'مبلغ', 'تعويض', 'سلفة', 'فلوس', 'اقترض', 'إيصال أمانة', 'ملكية', 'اتفاق', 'سلفت'],
+  reqDefs: {
+    issue: { l: 'طبيعة المشكلة والمبلغ أو الحق المتنازع عليه', kw: ['دين', 'تعويض', 'مبلغ', 'ملكية', 'عقد'] },
+    evidence: { l: 'ما يثبت الواقعة (عقد، إيصال، تحويل، رسائل، شهود)', kw: ['إيصال', 'تحويل', 'رسائل', 'شهود', 'عقد', 'كمبيالة'] },
+    date: { l: 'تاريخ الواقعة أو الاتفاق', kw: ['منذ', 'سنة', 'سنوات', 'شهر', 'أشهر', 'عام'] },
+    party: { l: 'بيانات الطرف الآخر (الاسم والعنوان)', kw: ['اسمه', 'عنوانه', 'يسكن'] }
+  },
+  baseReq: ['issue', 'evidence', 'date', 'party'],
+  steps: [
+    'اجمع كل ما يثبت الواقعة: عقود، إيصالات، تحويلات بنكية، رسائل.',
+    'اكتب تسلسلًا زمنيًا للوقائع مع التواريخ والمبالغ.',
+    'احتفظ بأي مراسلات مع الطرف الآخر ولا تحذفها.',
+    'قد توجد مدد زمنية تؤثر على الحقوق المدنية (التقادم)، لذلك لا تؤجل استشارة محامٍ.',
+    'يُفضّل عرض الموقف على محامٍ قبل التواصل الرسمي مع الطرف الآخر أو توقيع أي تسوية.'
+  ],
+  docs: ['أي عقد أو اتفاق مكتوب', 'إيصالات أو تحويلات بنكية', 'رسائل أو مراسلات مع الطرف الآخر', 'بيانات الطرف الآخر', 'بطاقة الرقم القومي'],
+  nodes: {
+    c1: Q('ما طبيعة المشكلة؟', [
+      o('مبلغ مالي أو دين', 'c2', { k: 'issue', c: 'مطالبة بمبلغ أو دين', s: 'ذكرت أن المسألة تتعلق بمبلغ مالي أو دين.' }),
+      o('تعويض عن ضرر', 'c3', { k: 'issue', c: 'تعويض عن ضرر', s: 'ذكرت أن المسألة تتعلق بتعويض عن ضرر.' }),
+      o('خلاف على عقد أو اتفاق', 'c4', { k: 'issue', c: 'خلاف على التزامات تعاقدية', s: 'ذكرت وجود خلاف على عقد أو اتفاق.' }),
+      o('ملكية أو حيازة شيء', 'c4', { k: 'issue', c: 'نزاع على ملكية أو حيازة', s: 'ذكرت أن المسألة تتعلق بملكية أو حيازة.' })
+    ]),
+    c2: Q('ما الذي يثبت هذا الدين؟', [
+      o('إيصال أو كمبيالة موقعة', 'c5', { k: 'evidence', s: 'لديك إيصال أو كمبيالة موقعة.' }),
+      o('تحويل بنكي أو رسائل', 'c5', { k: 'evidence', s: 'لديك تحويلات أو رسائل تثبت الدين.' }),
+      o('لا يوجد إثبات مكتوب', 'c5', { u: true, k: 'evidence', s: 'لا يوجد لديك إثبات مكتوب.', st: ['فكّر في أسماء من حضر الاتفاق أو علم به، فقد يُطلب منهم الشهادة.'] })
+    ]),
+    c3: Q('ما نوع الضرر؟', [
+      o('ضرر مادي في ممتلكات', 'c5', { s: 'الضرر مادي في ممتلكات.', dc: ['صور الضرر وتقدير تكلفة الإصلاح'] }),
+      o('إصابة جسدية', 'c5', { s: 'الضرر جسدي.', urgent: true, dc: ['تقارير طبية وفواتير علاج'] }),
+      o('ضرر معنوي أو في السمعة', 'c5', { s: 'الضرر معنوي أو في السمعة.' })
+    ]),
+    c4: Q('هل الاتفاق أو الملكية مثبتة كتابةً؟', [
+      o('نعم، مكتوب', 'c5', { k: 'evidence', s: 'الاتفاق أو الملكية مثبتة كتابةً.' }),
+      o('جزئيًا', 'c5', { k: 'evidence', u: true, s: 'الاتفاق أو الملكية مثبتة جزئيًا فقط.' }),
+      o('لا، شفهي فقط', 'c5', { k: 'evidence', u: true, s: 'الاتفاق أو الملكية غير مثبتة كتابةً.' })
+    ]),
+    c5: Q('متى وقعت الواقعة أو تم الاتفاق تقريبًا؟', [
+      o('خلال آخر سنة', 'c6', { k: 'date', s: 'الواقعة حدثت خلال آخر سنة.' }),
+      o('منذ سنة إلى ثلاث سنوات', 'c6', { k: 'date', s: 'الواقعة حدثت منذ سنة إلى ثلاث سنوات.' }),
+      o('منذ أكثر من ثلاث سنوات', 'c6', { k: 'date', urgent: true, s: 'الواقعة حدثت منذ أكثر من ثلاث سنوات.', st: ['مرور وقت طويل قد يؤثر على الحق في المطالبة؛ استشر محاميًا قريبًا بخصوص المدد.'] }),
+      UNSURE('c6', 'date')
+    ]),
+    c6: Q('هل تعرف بيانات الطرف الآخر كاملة؟', [
+      o('نعم، الاسم والعنوان', null, { k: 'party', s: 'تعرف الاسم والعنوان الكاملين للطرف الآخر.' }),
+      o('أعرف جزءًا منها', null, { k: 'party', u: true, s: 'تعرف جزءًا من بيانات الطرف الآخر.' }),
+      o('لا أعرفها', null, { k: 'party', u: true, s: 'لا تعرف بيانات الطرف الآخر.' })
+    ])
+  }
+},
+
+/* ---------------- تجاري ---------------- */
+{
+  id: 'commercial', label: 'تجاري', desc: 'شركات، شيكات، شركاء، عقود تجارية', cls: 'نزاع تجاري', start: 't1',
+  kw: ['شيك', 'شريك', 'شركة', 'تجاري', 'سجل تجاري', 'بضاعة', 'توريد', 'كمبيالة', 'مورد', 'تاجر'],
+  reqDefs: {
+    issue: { l: 'موضوع النزاع التجاري تحديدًا', kw: ['شيك', 'شريك', 'توريد', 'بضاعة', 'كمبيالة'] },
+    contract: { l: 'وجود عقد أو اتفاق مكتوب بين الطرفين', kw: ['عقد', 'اتفاق'] },
+    amount: { l: 'قيمة المبلغ أو الأثر المالي التقريبي', kw: ['جنيه', 'مبلغ', 'ألف', 'مليون'] },
+    party: { l: 'بيانات الطرف الآخر أو الشركة (الاسم، السجل التجاري)', kw: ['سجل تجاري', 'اسم الشركة'] },
+    docs: { l: 'المستندات (شيكات، فواتير، عقود، مراسلات)', kw: ['فاتورة', 'فواتير', 'شيك', 'مستند', 'إيصال'] }
+  },
+  baseReq: ['issue', 'contract', 'amount', 'docs'],
+  steps: [
+    'اجمع الفواتير والعقود والشيكات وأي مراسلات تجارية متعلقة بالموضوع.',
+    'رتّب الوقائع زمنيًا مع المبالغ وتواريخ الاستحقاق.',
+    'لا توقّع على تسويات أو تنازلات تجارية قبل مراجعتها قانونيًا.',
+    'قد تكون لبعض الأوراق التجارية مدد وإجراءات خاصة، فلا تؤجل عرضها على محامٍ.',
+    'يُفضّل الاستعانة بمحامٍ متخصص في القضايا التجارية قبل أي تحرك رسمي.'
+  ],
+  docs: ['العقد أو الاتفاق التجاري', 'الفواتير وأوامر التوريد', 'الشيكات أو الكمبيالات (الأصل وصورة)', 'السجل التجاري والبطاقة الضريبية للأطراف', 'المراسلات التجارية'],
+  nodes: {
+    t1: Q('ما موضوع المسألة التجارية؟', [
+      o('شيك أو كمبيالة', 't2', { k: 'issue', c: 'مسألة تتعلق بورقة تجارية (شيك أو كمبيالة)', s: 'المسألة تتعلق بشيك أو كمبيالة.' }),
+      o('خلاف مع شريك', 't3', { k: 'issue', c: 'خلاف بين شركاء', s: 'المسألة خلاف مع شريك.' }),
+      o('عقد توريد أو خدمة', 't4', { k: 'issue', c: 'خلاف على عقد توريد أو خدمة', s: 'المسألة تتعلق بعقد توريد أو خدمة.' }),
+      o('تأسيس أو تسجيل نشاط', 't5', { k: 'issue', c: 'تأسيس نشاط تجاري', s: 'المسألة تتعلق بتأسيس أو تسجيل نشاط.' })
+    ]),
+    t2: Q('ما وضعك من الشيك؟', [
+      o('شيك لي لم يُصرف', 't6', { urgent: true, s: 'لديك شيك لم يُصرف.', st: ['احتفظ بأصل الشيك وبأي إفادة من البنك بعدم الصرف ولا تسلّمه لأحد.'] }),
+      o('أنا من أصدر الشيك وأتعرض لمطالبة', 't6', { urgent: true, s: 'أنت من أصدر الشيك وتتعرض لمطالبة.', st: ['لا توقّع على أي ورقة أو تسوية قبل عرض الموقف على محامٍ.'] }),
+      UNSURE('t6')
+    ]),
+    t3: Q('هل يوجد عقد شركة أو اتفاق شراكة مكتوب؟', [
+      o('نعم', 't6', { k: 'contract', s: 'يوجد عقد شركة أو اتفاق شراكة مكتوب.' }),
+      o('لا، الاتفاق شفهي', 't6', { k: 'contract', u: true, s: 'اتفاق الشراكة شفهي.' }),
+      UNSURE('t6', 'contract')
+    ]),
+    t4: Q('هل يوجد عقد مكتوب؟', [
+      o('نعم', 't6', { k: 'contract', s: 'يوجد عقد توريد أو خدمة مكتوب.' }),
+      o('لا، أوامر توريد أو رسائل فقط', 't6', { k: 'contract', u: true, s: 'لا يوجد عقد، وإنما أوامر توريد أو رسائل.' }),
+      UNSURE('t6', 'contract')
+    ]),
+    t5: Q('ما نوع النشاط المقصود؟', [
+      o('نشاط فردي', 't6', { s: 'النشاط المقصود فردي.' }),
+      o('شركة بين شريكين أو أكثر', 't6', { s: 'النشاط المقصود شركة بين شريكين أو أكثر.' }),
+      UNSURE('t6')
+    ]),
+    t6: Q('ما حجم الأثر المالي التقريبي؟', [
+      o('صغير', 't7', { k: 'amount', s: 'الأثر المالي صغير.' }),
+      o('متوسط', 't7', { k: 'amount', s: 'الأثر المالي متوسط.' }),
+      o('كبير', 't7', { k: 'amount', s: 'الأثر المالي كبير.', urgent: true }),
+      UNSURE('t7', 'amount')
+    ]),
+    t7: Q('ما حالة المستندات التي لديك؟', [
+      o('لدي معظم المستندات', null, { k: 'docs', s: 'لديك معظم المستندات.' }),
+      o('لدي بعضها فقط', null, { k: 'docs', s: 'لديك بعض المستندات فقط.' }),
+      o('لا أملك مستندات', null, { u: true, k: 'docs', s: 'لا تملك مستندات حاليًا.' })
+    ])
+  }
+},
+
+/* ---------------- جنائي ---------------- */
+{
+  id: 'criminal', label: 'جنائي', desc: 'بلاغات، محاضر، استدعاءات', cls: 'مسألة جنائية', highRisk: true, start: 'k1',
+  kw: ['بلاغ', 'محضر', 'نيابة', 'قبض', 'حبس', 'اتهام', 'سب', 'قذف', 'سرقة', 'تهديد', 'ضرب', 'استدعاء', 'شرطة', 'قسم'],
+  reqDefs: {
+    role: { l: 'صفتك (مبلِّغ أم مشكو في حقه أم قريب لمتهم)', kw: ['بلغت', 'اتهمت', 'متهم', 'مبلغ'] },
+    stage: { l: 'المرحلة الحالية (بلاغ، تحقيق، محكمة) وأي موعد قريب', kw: ['نيابة', 'محضر', 'جلسة', 'تحقيق', 'محكمة'] },
+    date: { l: 'تاريخ الواقعة بدقة', kw: ['منذ', 'يوم', 'أسبوع', 'شهر'] },
+    docs: { l: 'المستندات (محضر، إعلان، استدعاء، أدلة)', kw: ['محضر', 'إعلان', 'استدعاء', 'مستند', 'صور', 'تسجيل'] }
+  },
+  baseReq: ['role', 'stage', 'date', 'docs'],
+  steps: [
+    'احتفظ بأي أوراق رسمية وصلتك (استدعاء، إعلان، محضر) وسجّل تاريخ استلامها.',
+    'دوّن ما حدث بالتفصيل وبالتسلسل الزمني وأسماء الشهود، دون مشاركته علنًا.',
+    'لا تقدّم أقوالًا رسمية أو توقّع على أوراق قبل أن تفهم موقفك القانوني.',
+    'لا تتخلص من أي أدلة (رسائل، صور، تسجيلات) ولا تعدّل عليها.',
+    'المسائل الجنائية قد تكون عالية الخطورة، لذا يُفضّل الاستعانة بمحامٍ في أقرب وقت.'
+  ],
+  docs: ['صورة المحضر أو رقمه', 'الاستدعاء أو الإعلان الرسمي', 'أي أدلة (رسائل، صور، تسجيلات)', 'بيانات الشهود', 'بطاقة الرقم القومي'],
+  nodes: {
+    k1: Q('ما صفتك في هذه المسألة؟', [
+      o('أريد تقديم بلاغ', 'k2', { k: 'role', c: 'تقديم بلاغ جنائي', s: 'صفتك: ترغب في تقديم بلاغ.' }),
+      o('بُلِّغ ضدي أو تم استدعائي', 'k3', { k: 'role', urgent: true, c: 'اتهام أو استدعاء في مسألة جنائية', s: 'ذكرت أنه تم بلاغ ضدك أو استدعاؤك.' }),
+      o('قريب لشخص محتجز أو متهم', 'k3', { k: 'role', urgent: true, c: 'متابعة حالة شخص متهم أو محتجز', s: 'ذكرت أنك قريب لشخص محتجز أو متهم.' }),
+      o('صفة أخرى', 'k4', { k: 'role', s: 'صفتك في المسألة غير مذكورة في الخيارات.' })
+    ]),
+    k2: Q('متى وقعت الواقعة؟', [
+      o('خلال الأيام الأخيرة', 'k4', { k: 'date', s: 'الواقعة حدثت خلال الأيام الأخيرة.', st: ['وثّق الواقعة وأي أدلة فورًا قبل أن تضيع.'] }),
+      o('منذ أسابيع أو أشهر', 'k4', { k: 'date', s: 'الواقعة حدثت منذ أسابيع أو أشهر.' }),
+      o('منذ فترة أطول', 'k4', { k: 'date', s: 'الواقعة حدثت منذ فترة طويلة.' })
+    ]),
+    k3: Q('ما المرحلة الحالية؟', [
+      o('لم يصدر شيء رسمي بعد', 'k4', { k: 'stage', s: 'لم يصدر شيء رسمي بعد.' }),
+      o('محضر أو استدعاء للتحقيق', 'k4', { k: 'stage', s: 'هناك محضر أو استدعاء للتحقيق.' }),
+      o('جلسة محكمة محددة', 'k4', { k: 'stage', s: 'هناك جلسة محكمة محددة.', st: ['سجّل موعد الجلسة واسم المحكمة ورقم القضية إن وُجد.'] }),
+      UNSURE('k4', 'stage')
+    ]),
+    k4: Q('هل لديك مستندات أو أدلة؟', [
+      o('نعم، لدي ما يخص الموضوع', null, { k: 'docs', s: 'لديك مستندات أو أدلة تخص الموضوع.' }),
+      o('لدي القليل', null, { k: 'docs', s: 'لديك القليل من المستندات أو الأدلة.' }),
+      o('لا أملك شيئًا', null, { u: true, k: 'docs', s: 'لا تملك مستندات أو أدلة حاليًا.' })
+    ])
+  }
+},
+
+/* ---------------- إداري ---------------- */
+{
+  id: 'admin', label: 'إداري', desc: 'قرارات حكومية، تراخيص، موظفو الدولة', cls: 'مسألة إدارية', start: 'a1',
+  kw: ['قرار إداري', 'محافظة', 'حي', 'ترخيص', 'تظلم', 'إزالة', 'مجلس الدولة', 'جهة حكومية', 'موظف حكومي', 'تصريح'],
+  reqDefs: {
+    entity: { l: 'اسم الجهة الإدارية المعنية', kw: ['محافظة', 'حي', 'وزارة', 'هيئة', 'مجلس'] },
+    decision: { l: 'نص القرار أو الإجراء المعترض عليه', kw: ['قرار', 'رفض', 'إزالة', 'فصل', 'نقل'] },
+    date: { l: 'تاريخ القرار أو تاريخ علمك به', kw: ['منذ', 'بتاريخ', 'شهر', 'أسبوع'] },
+    docs: { l: 'المستندات (القرار، التظلم، الرد)', kw: ['مستند', 'قرار مكتوب', 'تظلم', 'إخطار'] }
+  },
+  baseReq: ['entity', 'decision', 'date', 'docs'],
+  steps: [
+    'احصل على نسخة مكتوبة من القرار أو الرفض إن لم تكن لديك.',
+    'سجّل تاريخ علمك بالقرار بدقة، فقد تكون هناك مواعيد قصيرة للطعن على القرارات الإدارية.',
+    'اجمع المراسلات وأي طلبات سابقة قدمتها للجهة.',
+    'قد يكون من المفيد معرفة ما إذا كان هناك تظلم إداري مطلوب قبل أي إجراء آخر.',
+    'يُفضّل استشارة محامٍ مختص في القانون الإداري سريعًا بسبب حساسية المواعيد.'
+  ],
+  docs: ['القرار الإداري المكتوب أو الرد بالرفض', 'الطلب الأصلي المقدم للجهة', 'أي تظلم أو شكوى سابقة ورد الجهة عليها', 'ما يثبت صفتك أو مصلحتك', 'بطاقة الرقم القومي'],
+  nodes: {
+    a1: Q('ما موضوع المسألة الإدارية؟', [
+      o('قرار وظيفي (فصل، نقل، ترقية)', 'a2', { k: 'decision', c: 'قرار وظيفي في جهة حكومية', s: 'المسألة تتعلق بقرار وظيفي.' }),
+      o('ترخيص أو تصريح', 'a2', { k: 'decision', c: 'ترخيص أو تصريح إداري', s: 'المسألة تتعلق بترخيص أو تصريح.' }),
+      o('قرار إزالة أو هدم', 'a2', { k: 'decision', urgent: true, c: 'قرار إزالة أو هدم', s: 'المسألة تتعلق بقرار إزالة أو هدم.' }),
+      o('طلب لم يتم الرد عليه', 'a3', { k: 'decision', c: 'امتناع جهة إدارية عن الرد', s: 'قدمت طلبًا ولم يتم الرد عليه.' })
+    ]),
+    a2: Q('هل صدر القرار كتابةً؟', [
+      o('نعم، وبين يدي نسخة منه', 'a3', { k: 'decision', s: 'القرار صدر كتابةً ولديك نسخة منه.' }),
+      o('نعم، لكن لا أملك نسخة', 'a3', { k: 'decision', u: true, s: 'القرار كتابي لكن ليست لديك نسخة.' }),
+      o('لا، أُبلغت شفهيًا', 'a3', { k: 'decision', u: true, s: 'تم إبلاغك بالقرار شفهيًا.' })
+    ]),
+    a3: Q('هل تقدمت بتظلم أو شكوى للجهة؟', [
+      o('نعم', 'a4', { k: 'entity', s: 'تقدمت بتظلم أو شكوى للجهة.' }),
+      o('لا', 'a4', { k: 'entity', s: 'لم تتقدم بتظلم أو شكوى بعد.' })
+    ]),
+    a4: Q('متى علمت بالقرار أو الرفض تقريبًا؟', [
+      o('خلال آخر شهر', 'a5', { k: 'date', s: 'علمت بالقرار خلال آخر شهر.' }),
+      o('منذ شهر إلى شهرين', 'a5', { k: 'date', urgent: true, s: 'علمت بالقرار منذ شهر إلى شهرين.' }),
+      o('منذ أكثر من شهرين', 'a5', { k: 'date', urgent: true, s: 'علمت بالقرار منذ أكثر من شهرين.' }),
+      UNSURE('a5', 'date')
+    ], 'مواعيد الطعن الإدارية قد تكون قصيرة، لذلك يهمنا التاريخ.'),
+    a5: Q('ما حالة المستندات التي لديك؟', [
+      o('لدي معظم المستندات', null, { k: 'docs', s: 'لديك معظم المستندات.' }),
+      o('لدي بعضها فقط', null, { k: 'docs', s: 'لديك بعض المستندات فقط.' }),
+      o('لا أملك مستندات', null, { u: true, k: 'docs', s: 'لا تملك مستندات حاليًا.' })
+    ])
+  }
+},
+
+/* ---------------- مرور ---------------- */
+{
+  id: 'traffic', label: 'مرور', desc: 'مخالفات، حوادث، رخص ومركبات', cls: 'مسألة مرورية', start: 'm1',
+  kw: ['مرور', 'مخالفة', 'حادث', 'سيارة', 'رخصة', 'سحب', 'تصادم', 'مركبة', 'عربية'],
+  reqDefs: {
+    type: { l: 'نوع الواقعة (مخالفة، حادث، رخصة، حجز مركبة)', kw: ['مخالفة', 'حادث', 'رخصة', 'سحب', 'تصادم'] },
+    report: { l: 'هل تم تحرير محضر وما رقمه؟', kw: ['محضر', 'رقم'] },
+    injury: { l: 'هل توجد إصابات أو أضرار؟', kw: ['إصابة', 'مصاب', 'تلف', 'ضرر'] },
+    docs: { l: 'المستندات (رخصة، ترخيص السيارة، وثيقة التأمين، صور)', kw: ['رخصة', 'تأمين', 'صور', 'مستند'] }
+  },
+  baseReq: ['type', 'report', 'docs'],
+  steps: [
+    'احتفظ بصور لموقع الواقعة والمركبات وأي أضرار فور تمكنك من ذلك.',
+    'دوّن بيانات الطرف الآخر ورقم لوحة المركبة وأسماء الشهود.',
+    'احتفظ بأي إيصال أو ورقة رسمية سُلّمت لك.',
+    'قد يفيدك الاستفسار عن إجراءات التظلم من المخالفات لدى إدارة المرور المختصة.',
+    'يُفضّل استشارة محامٍ إذا كانت هناك إصابات أو محضر رسمي.',
+    'توجد تحديثات رسمية حديثة للائحة التنفيذية لقانون المرور؛ راجع مكتبة مستشارك للتحقق من القرار قبل الاعتماد على إجراء محدد.'
+  ],
+  docs: ['رخصة القيادة ورخصة المركبة', 'وثيقة التأمين على المركبة', 'محضر الحادث أو المخالفة', 'صور الواقعة والأضرار', 'بيانات الشهود والطرف الآخر'],
+  nodes: {
+    m1: Q('ما نوع الموقف؟', [
+      o('مخالفة مرورية', 'm3', { k: 'type', c: 'مخالفة مرورية', s: 'الموقف: مخالفة مرورية.' }),
+      o('حادث سير', 'm2', { k: 'type', c: 'حادث سير', s: 'الموقف: حادث سير.' }),
+      o('رخصة قيادة أو ترخيص مركبة', 'm3', { k: 'type', c: 'مسألة ترخيص مركبة أو قيادة', s: 'الموقف: رخصة قيادة أو ترخيص مركبة.' }),
+      o('سحب أو حجز مركبة', 'm3', { k: 'type', c: 'سحب أو حجز مركبة', s: 'الموقف: سحب أو حجز مركبة.' })
+    ]),
+    m2: Q('هل توجد إصابات؟', [
+      o('نعم', 'm3', { k: 'injury', urgent: true, s: 'ذكرت وجود إصابات في الحادث.', dc: ['تقارير طبية وفواتير علاج'] }),
+      o('لا، أضرار مادية فقط', 'm3', { k: 'injury', s: 'الحادث بلا إصابات، أضرار مادية فقط.' }),
+      UNSURE('m3', 'injury')
+    ]),
+    m3: Q('هل تم تحرير محضر؟', [
+      o('نعم', 'm4', { k: 'report', s: 'تم تحرير محضر.' }),
+      o('لا', 'm4', { k: 'report', s: 'لم يتم تحرير محضر.' }),
+      UNSURE('m4', 'report')
+    ]),
+    m4: Q('ما حالة المستندات التي لديك؟', [
+      o('لدي معظم المستندات', null, { k: 'docs', s: 'لديك معظم المستندات.' }),
+      o('لدي بعضها فقط', null, { k: 'docs', s: 'لديك بعض المستندات فقط.' }),
+      o('لا أملك مستندات', null, { u: true, k: 'docs', s: 'لا تملك مستندات حاليًا.' })
+    ])
+  }
+},
+
+/* ---------------- تأمينات ---------------- */
+{
+  id: 'insurance', label: 'تأمينات', desc: 'تأمين اجتماعي، معاشات، تأمين طبي وسيارات', cls: 'مسألة تأمينية', start: 'i1',
+  kw: ['تأمين', 'معاش', 'التأمينات', 'بوليصة', 'وثيقة', 'إصابة عمل', 'اشتراك'],
+  reqDefs: {
+    type: { l: 'نوع التأمين (اجتماعي، طبي، سيارة، حياة)', kw: ['اجتماعي', 'طبي', 'سيارة', 'حياة', 'معاش'] },
+    issue: { l: 'موقف الجهة (رفض، تأخير، تقدير غير كافٍ)', kw: ['رفض', 'تأخر', 'رفضت'] },
+    period: { l: 'مدة الاشتراك أو تاريخ الواقعة', kw: ['منذ', 'سنة', 'سنوات', 'اشتراك'] },
+    docs: { l: 'المستندات (الوثيقة، قرار الرفض، المراسلات)', kw: ['وثيقة', 'بوليصة', 'قرار', 'مراسلات', 'مستند'] }
+  },
+  baseReq: ['type', 'issue', 'period', 'docs'],
+  steps: [
+    'اطلب نسخة مكتوبة من قرار الرفض أو الرد، وسبب القرار إن لم يكن مذكورًا.',
+    'اجمع وثيقة التأمين وإيصالات السداد أو بيان الاشتراكات.',
+    'دوّن تواريخ الواقعة والإبلاغ وكل تواصل مع جهة التأمين.',
+    'قد يفيدك الاطلاع على وسائل التظلم المتاحة لدى الجهة قبل التصعيد.',
+    'يُفضّل استشارة محامٍ إذا كان المبلغ كبيرًا أو القرار نهائيًا.'
+  ],
+  docs: ['وثيقة أو بوليصة التأمين', 'بيان الاشتراكات أو إيصالات السداد', 'قرار الرفض أو الرد المكتوب', 'تقارير طبية أو محاضر الواقعة (إن وُجدت)', 'بطاقة الرقم القومي'],
+  nodes: {
+    i1: Q('ما نوع التأمين المقصود؟', [
+      o('تأمين اجتماعي أو معاش', 'i2', { k: 'type', c: 'تأمين اجتماعي أو معاش', s: 'المسألة تتعلق بتأمين اجتماعي أو معاش.' }),
+      o('تأمين من شركة (سيارة، طبي، حياة)', 'i3', { k: 'type', c: 'مطالبة لدى شركة تأمين', s: 'المسألة تتعلق بتأمين لدى شركة.' }),
+      o('إصابة عمل', 'i2', { k: 'type', urgent: true, c: 'إصابة عمل وحقوقها التأمينية', s: 'المسألة تتعلق بإصابة عمل.' })
+    ]),
+    i2: Q('ما المشكلة تحديدًا؟', [
+      o('رفض صرف معاش أو تعويض', 'i4', { k: 'issue', s: 'تم رفض صرف المعاش أو التعويض.' }),
+      o('خطأ في بيانات أو مدة الاشتراك', 'i4', { k: 'issue', s: 'ذكرت وجود خطأ في بيانات أو مدة الاشتراك.' }),
+      o('جهة العمل لم تسجلني في التأمينات', 'i4', { k: 'issue', s: 'ذكرت أن جهة العمل لم تسجلك في التأمينات.' })
+    ]),
+    i3: Q('ما موقف الشركة؟', [
+      o('رفضت التعويض', 'i4', { k: 'issue', s: 'شركة التأمين رفضت التعويض.' }),
+      o('تأخرت في الرد أو الصرف', 'i4', { k: 'issue', s: 'شركة التأمين تأخرت في الرد أو الصرف.' }),
+      o('قدّرت مبلغًا لا يكفي', 'i4', { k: 'issue', s: 'ترى أن المبلغ الذي قدرته شركة التأمين لا يكفي.' })
+    ]),
+    i4: Q('هل لديك قرار الرفض أو الرد مكتوبًا؟', [
+      o('نعم', 'i5', { k: 'period', s: 'لديك الرد أو القرار مكتوبًا.' }),
+      o('لا، كان شفهيًا', 'i5', { k: 'period', u: true, s: 'الرد كان شفهيًا.' }),
+      UNSURE('i5', 'period')
+    ]),
+    i5: Q('ما حالة المستندات التي لديك؟', [
+      o('لدي معظم المستندات', null, { k: 'docs', s: 'لديك معظم المستندات.' }),
+      o('لدي بعضها فقط', null, { k: 'docs', s: 'لديك بعض المستندات فقط.' }),
+      o('لا أملك مستندات', null, { u: true, k: 'docs', s: 'لا تملك مستندات حاليًا.' })
+    ])
+  }
+},
+
+/* ---------------- أخرى ---------------- */
+{
+  id: 'other', label: 'أخرى', desc: 'مسألة لا تجدها في الأقسام السابقة', cls: 'مسألة قانونية لم يتحدد قسمها بعد', start: 'x1',
+  kw: [],
+  reqDefs: {
+    issue: { l: 'وصف المشكلة بكلماتك (ماذا حدث ومتى ومع من)', kw: [] },
+    goal: { l: 'ما الذي تريد الوصول إليه؟', kw: ['أريد', 'عايز', 'أطلب'] },
+    deadline: { l: 'وجود موعد أو إجراء قريب', kw: ['موعد', 'جلسة', 'مهلة'] },
+    docs: { l: 'المستندات المتوفرة لديك', kw: ['مستند', 'عقد', 'إيصال', 'صور'] }
+  },
+  baseReq: ['issue', 'goal', 'deadline', 'docs'],
+  steps: [
+    'اكتب ما حدث بالتسلسل مع التواريخ وأسماء الأطراف.',
+    'اجمع كل الأوراق والرسائل المتعلقة بالموضوع.',
+    'حدّد بوضوح ما الذي تريد الوصول إليه من هذه المسألة.',
+    'جرّب وصف موقفك بالكتابة الحرة في هذه الأداة لمساعدتنا على تحديد القسم الأنسب.',
+    'يُفضّل استشارة محامٍ لتحديد المسار القانوني المناسب.'
+  ],
+  docs: ['أي مستندات أو عقود تخص الموضوع', 'المراسلات مع الأطراف الأخرى', 'بطاقة الرقم القومي', 'صور أو أدلة داعمة'],
+  nodes: {
+    x1: Q('كيف تصف طبيعة المشكلة؟', [
+      o('نزاع مع شخص أو جهة', 'x2', { k: 'issue', c: 'نزاع بين أطراف', s: 'المسألة نزاع مع شخص أو جهة.' }),
+      o('أحتاج إلى توثيق أو إجراء رسمي', 'x2', { k: 'goal', c: 'إجراء أو توثيق رسمي', s: 'تحتاج إلى توثيق أو إجراء رسمي.' }),
+      o('استفسار عام عن حقوقي', 'x2', { k: 'goal', s: 'لديك استفسار عام عن حقوقك.' }),
+      UNSURE('x2', 'issue')
+    ]),
+    x2: Q('هل هناك موعد أو إجراء قريب؟', [
+      o('نعم', 'x3', { k: 'deadline', urgent: true, s: 'ذكرت وجود موعد أو إجراء قريب.' }),
+      o('لا', 'x3', { k: 'deadline', s: 'لا يوجد موعد أو إجراء قريب.' }),
+      UNSURE('x3', 'deadline')
+    ]),
+    x3: Q('ما حالة المستندات التي لديك؟', [
+      o('لدي مستندات', null, { k: 'docs', s: 'لديك مستندات تخص الموضوع.' }),
+      o('لدي القليل', null, { k: 'docs', s: 'لديك القليل من المستندات.' }),
+      o('لا أملك مستندات', null, { u: true, k: 'docs', s: 'لا تملك مستندات حاليًا.' })
+    ])
+  }
+}
+]};
+/* =====================================================================
+   2) Services — طبقة الخدمات. الواجهة لا تتعامل مع البيانات مباشرة.
+   لاحقًا: KnowledgeService ← قاعدة المعرفة، AnalysisService ← الذكاء الاصطناعي.
+   نفس شكل النتيجة (Result) يبقى ثابتًا ليسهل الاستبدال.
+   Result = { mode, summary[], excerpt?, classification{text,note}, missing[], steps[], docs[], urgent }
+   ===================================================================== */
+const norm = (s) => String(s || '').replace(/[ً-ٰٟـ]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').toLowerCase();
+const hasAny = (text, words) => words.some((w) => w && text.includes(norm(w)));
+const uniq = (arr) => [...new Set(arr.filter(Boolean))];
+
+
+/* =====================================================================
+   2A) VERIFIED_LEGAL_UPDATES — تحديثات قانونية موثقة
+   المصدر: مستودع الجريدة الرسمية/الوقائع المصرية التابع لمركز المعلومات
+   ودعم اتخاذ القرار. هذه البيانات توصيات إدراج وليست اتصالًا حيًا بالمصدر.
+   ===================================================================== */
+const VERIFIED_LEGAL_UPDATES = [
+  {
+    id: 'moj-5931-2026',
+    title: 'قرار وزير العدل رقم 5931 لسنة 2026',
+    type: 'قرار وزاري',
+    category: 'أحوال شخصية / تنفيذ النفقة',
+    published: '8 نوفمبر 2026',
+    gazette: 'الوقائع المصرية — ملحق العدد 248 تابع',
+    status: 'منشور رسميًا',
+    effect: 'يعدل بعض أحكام قرار وزير العدل رقم 2722 لسنة 2004 بشأن قواعد وإجراءات تنفيذ الأحكام الصادرة بالنفقات والأجور وما في حكمها.',
+    source: 'مستودع الجريدة الرسمية والوقائع المصرية — مركز المعلومات ودعم اتخاذ القرار',
+    url: 'https://dspace.id.com.eg/items/3ea2a95e-214a-4110-9d34-44ee26dbc8a8',
+    note: 'يوصى بمراجعة النص الكامل للقرار مادةً بمادة قبل استخدام تفاصيل إجرائية دقيقة.'
+  },
+  {
+    id: 'law-160-2026',
+    title: 'قانون رقم 160 لسنة 2026',
+    type: 'قانون',
+    category: 'إجراءات جنائية',
+    published: '30 سبتمبر 2026',
+    gazette: 'الجريدة الرسمية — العدد 39 مكرر (ب)',
+    status: 'قانون صادر ومنشور',
+    effect: 'يعدل بعض أحكام القانون رقم 174 لسنة 2025 بإصدار قانون الإجراءات الجنائية.',
+    source: 'الجريدة الرسمية — مركز المعلومات ودعم اتخاذ القرار',
+    url: 'https://dspace.id.com.eg/items/097a75c4-11e2-4972-907a-6df5558350b8',
+    note: 'تُعرض حالة النفاذ بصورة منفصلة عن مجرد صدور القانون؛ لا يُفترض أن كل حكم في القانون الجديد نافذ فور نشره.'
+  },
+  {
+    id: 'traffic-1702-2026',
+    title: 'قرار وزير الداخلية رقم 1702 لسنة 2026',
+    type: 'قرار وزاري',
+    category: 'مرور',
+    published: '30 سبتمبر 2026',
+    gazette: 'الوقائع المصرية — ملحق العدد 216',
+    status: 'منشور رسميًا',
+    effect: 'يعدل بعض أحكام اللائحة التنفيذية لقانون المرور الصادرة بالقرار الوزاري رقم 1613 لسنة 2008.',
+    source: 'الوقائع المصرية — مركز المعلومات ودعم اتخاذ القرار',
+    url: 'https://dspace.id.com.eg/',
+    note: 'أدرج كاقتراح تحديث إضافي للمكتبة؛ يجب ربطه بالنسخة الرسمية التفصيلية عند بناء قاعدة المرور.'
+  }
+];
+
+const KnowledgeService = {
+  categories: () => DEMO_DATA.categories,
+  category: (id) => DEMO_DATA.categories.find((c) => c.id === id),
+  node: (cat, nodeId) => cat.nodes[nodeId],
+  // أطول مسار متبقٍ من سؤال معين (لشريط التقدم)
+  depth(cat, nodeId, memo = {}) {
+    if (!nodeId) return 0;
+    if (memo[nodeId] !== undefined) return memo[nodeId];
+    const nxt = cat.nodes[nodeId].opts.map((op) => op.next);
+    return (memo[nodeId] = 1 + Math.max(0, ...nxt.map((n) => this.depth(cat, n, memo))));
+  }
+};
+
+const AnalysisService = {
+  async analyzeGuided({ catId, answers }) {
+    const cat = KnowledgeService.category(catId);
+    const opts = answers.map((a) => cat.nodes[a.nodeId].opts[a.optIdx]);
+    const need = new Set(cat.baseReq);
+    const answered = new Set();
+    const unsure = new Set();
+    opts.forEach((op) => {
+      (op.need || []).forEach((k) => need.add(k));
+      if (op.k) (op.u ? unsure : answered).add(op.k);
+    });
+    const missing = Object.keys(cat.reqDefs)
+      .filter((k) => need.has(k) && !answered.has(k))
+      .map((k) => cat.reqDefs[k].l + (unsure.has(k) ? ' (ذكرتَ أنك غير متأكد أو لا تملكه)' : ''));
+    const cs = opts.map((op) => op.c).filter(Boolean);
+    const main = cs.length ? cs[cs.length - 1] : cat.cls;
+    const urgent = cat.highRisk ? 'high' : opts.some((op) => op.urgent) ? 'time' : null;
+    return {
+      mode: 'guided',
+      summary: [`اخترتَ قسم «${cat.label}».`, ...opts.map((op) => op.s)].filter(Boolean),
+      classification: { text: `يبدو أن المسألة تتعلق ب${main}.`, note: `ضمن مجال «${cat.label}».` },
+      missing,
+      steps: uniq([...opts.flatMap((op) => op.st || []), ...cat.steps]).slice(0, 8),
+      docs: uniq([...cat.docs, ...opts.flatMap((op) => op.dc || [])]),
+      urgent
+    };
+  },
+
+  async analyzeText(text) {
+    const t = norm(text);
+    const all = KnowledgeService.categories();
+    const scored = all.filter((c) => c.id !== 'other')
+      .map((c) => ({ c, score: c.kw.reduce((n, w) => n + (t.includes(norm(w)) ? 1 : 0), 0) }))
+      .sort((a, b) => b.score - a.score);
+    const unclear = scored[0].score === 0;
+    const cat = unclear ? KnowledgeService.category('other') : scored[0].c;
+    const second = !unclear && scored[1].score > 0 && scored[1].score >= scored[0].score * 0.6 ? scored[1].c : null;
+    const found = Object.keys(cat.reqDefs).filter((k) => cat.reqDefs[k].kw.length === 0 || hasAny(t, cat.reqDefs[k].kw));
+    const need = new Set(cat.baseReq);
+    Object.keys(cat.reqDefs).forEach((k) => { const d = cat.reqDefs[k]; if (d.tr && hasAny(t, d.tr)) need.add(k); });
+    const missing = Object.keys(cat.reqDefs).filter((k) => need.has(k) && !found.includes(k)).map((k) => cat.reqDefs[k].l);
+    const signals = found.filter((k) => cat.reqDefs[k].kw.length).map((k) => cat.reqDefs[k].l.replace(/\s*\(.*?\)/g, ''));
+    const words = text.trim().split(/\s+/).length;
+    const rush = hasAny(t, ['قبض', 'حبس', 'إنذار', 'إخلاء', 'مهلة', 'جلسة', 'استدعاء', 'إزالة', 'تهديد', 'ضرب', 'عنف', 'خطر']);
+    return {
+      mode: 'text',
+      summary: [
+        `وصفتَ موقفك في نحو ${words} كلمة.`,
+        signals.length ? `رصد النظام في نصك إشارات إلى: ${signals.join('، ')}.` : 'لم يرصد النظام تفاصيل محددة في نصك بعد.'
+      ],
+      excerpt: text.trim().slice(0, 420) + (text.trim().length > 420 ? '…' : ''),
+      classification: unclear
+        ? { text: 'لم يتضح التصنيف بعد؛ قد تكون المسألة خارج الأقسام المعروفة أو تحتاج مزيدًا من التفاصيل.', note: '' }
+        : { text: `يبدو أن المسألة تتعلق ب${cat.cls}.`, note: `ضمن مجال «${cat.label}».` + (second ? ` وقد تتصل أيضًا بمجال «${second.label}».` : '') },
+      missing,
+      steps: cat.steps,
+      docs: cat.docs,
+      urgent: cat.highRisk ? 'high' : rush ? 'time' : null
+    };
+  }
+};
+
+/* =====================================================================
+   3) State + الواجهة
+   ===================================================================== */
+document.documentElement.lang = 'ar';
+document.documentElement.dir = 'rtl';
+
+const S = { view: 'welcome', catId: null, nodeId: null, answers: [], pendingOpt: null, text: '', result: null, checked: {} };
+const $view = document.getElementById('view');
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const ARROW = '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';
+const backBtn = (action, label = 'رجوع') =>
+  `<button class="back" type="button" data-action="${action}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>${label}</button>`;
+
+const views = {
+  welcome() {
+    const cats = KnowledgeService.categories().filter(c => c.id !== 'other').map(c =>
+      `<button class="btn" type="button" data-action="pick-cat" data-id="${c.id}"><span>${esc(c.label)}<small>${esc(c.desc)}</small></span>${ARROW}</button>`).join('');
+    return `<section class="view">
+      <div class="stack">
+        <span class="pill" style="align-self:flex-start">بوابتك لفهم حقوقك</span>
+        <h1 data-focus>مرحبًا بك في مستشارك</h1>
+        <p class="lead">ابدأ من نوع المشكلة، أو اكتب سؤالك كما تحكيه لمحامٍ. سنساعدك على ترتيب المعلومات وتحديد ما تحتاج إلى معرفته.</p>
+      </div>
+      <div class="searchbox"><span aria-hidden="true">⌕</span><input id="home-search" type="search" placeholder="ابحث عن مشكلة قانونية أو قسم..." aria-label="ابحث عن مشكلة قانونية"><button class="btn btn-inline" type="button" data-action="search-home">بحث</button></div>
+      <div class="actions"><button class="btn btn-primary btn-inline" type="button" data-action="start-free">اكتب مشكلتك</button><button class="btn btn-inline" type="button" data-action="start-guided">ابدأ بأسئلة موجّهة</button></div>
+      <div class="section-head"><h2>أنواع المشكلات القانونية</h2><span class="sub">اختر مباشرة</span></div>
+      <div class="cats" id="home-categories">${cats}</div>
+      <div class="stack"><div class="section-head"><h2>مشكلات شائعة</h2></div>
+        <div class="chips">
+          <button class="chip" data-action="common" data-cat="work" data-text="صاحب العمل لم يدفع راتبي أو مستحقاتي">تأخر الراتب</button>
+          <button class="chip" data-action="common" data-cat="work" data-text="تم فصلي من العمل دون إخطار">الفصل من العمل</button>
+          <button class="chip" data-action="common" data-cat="realestate" data-text="لدي نزاع بشأن عقد إيجار أو إخلاء">نزاع إيجار</button>
+          <button class="chip" data-action="common" data-cat="personal" data-text="أريد معرفة حقوق النفقة والحضانة">نفقة وحضانة</button>
+          <button class="chip" data-action="common" data-cat="civil" data-text="شخص مدين لي بمبلغ ويرفض السداد">دين وامتناع عن السداد</button>
+          <button class="chip" data-action="common" data-cat="traffic" data-text="تعرضت لحادث مروري وأريد معرفة الإجراءات">حادث مروري</button>
+        </div>
+      </div>
+      <div class="home-grid">
+        <button class="home-tile" data-action="library"><strong>المكتبة القانونية</strong><small>تشريعات ومراجع وأحكام موثقة</small></button>
+        <button class="home-tile" data-action="library"><strong>تحديثات هذا الأسبوع</strong><small>قوانين وقرارات موثقة مع تاريخ آخر تحقق</small></button>
+        <button class="home-tile" data-action="lawyers"><strong>دليل المحامين</strong><small>البحث حسب التخصص والمحافظة</small></button>
+      </div>
+      <p class="demo-note">نسخة تطويرية: التحليل القانوني ما زال تجريبيًا، والمكتبة تحتوي على تحديثات مرجعية موثقة يدويًا وليست اتصالًا حيًا بمصدر تشريعي. لا تدخل بيانات شديدة الحساسية أو مستندات شخصية.</p>
+    </section>`;
+  },
+
+  categories() {
+    const cats = KnowledgeService.categories().map((c) =>
+      `<button class="btn" type="button" data-action="pick-cat" data-id="${c.id}"><span>${esc(c.label)}<small>${esc(c.desc)}</small></span>${ARROW}</button>`).join('');
+    return `<section class="view">
+      ${backBtn('home')}
+      <div class="stack">
+        <span class="sub" style="color:var(--ink-2);font-size:.92rem">الخطوة 1</span>
+        <h1 data-focus>ما نوع المشكلة القانونية؟</h1>
+        <p class="lead">اختر القسم الأقرب لموقفك، ويمكنك تغييره لاحقًا.</p>
+      </div>
+      <div class="cats">${cats}</div>
+      <button class="link" type="button" data-action="start-free">لا تجد قسمك؟ اكتب مشكلتك بكلماتك</button>
+    </section>`;
+  },
+
+  library() {
+    const updates = VERIFIED_LEGAL_UPDATES.map((u) => `
+      <article class="sec">
+        <div class="section-head"><h2>${esc(u.title)}</h2><span class="pill">${esc(u.status)}</span></div>
+        <p class="sub">${esc(u.type)} · ${esc(u.category)}</p>
+        <div class="answer-list">
+          <div class="answer-item"><strong>تاريخ النشر</strong><span>${esc(u.published)}</span></div>
+          <div class="answer-item"><strong>بيان النشر</strong><span>${esc(u.gazette)}</span></div>
+          <div class="answer-item"><strong>الأثر</strong><span>${esc(u.effect)}</span></div>
+        </div>
+        <div class="notice">${esc(u.note)}</div>
+        <a class="btn btn-inline" href="${u.url}" target="_blank" rel="noopener noreferrer" style="text-decoration:none">فتح المصدر الرسمي ↗</a>
+      </article>`).join('');
+
+    return `<section class="view">${backBtn('home')}
+      <div class="stack">
+        <span class="pill" style="align-self:flex-start">آخر تحقق: 12 نوفمبر 2026</span>
+        <h1 data-focus>المكتبة القانونية</h1>
+        <p class="lead">تحديثات تشريعية مصرية موثقة، مع تمييز القانون الصادر عن المشروع، وبيان النشر وحالة النفاذ، وعدم اعتبار الخبر الصحفي مصدرًا أصليًا.</p>
+      </div>
+
+      <div class="summary-highlight">
+        <h2>تحديثات موصى بإدراجها</h2>
+        <p>هذه العناصر أضيفت إلى واجهة المكتبة كبيانات مرجعية داخل النسخة التجريبية. لا يعني ذلك أن التطبيق متصل تلقائيًا بمصدر تشريعي حي أو أن النصوص الأصلية نُسخت إلى قاعدة بيانات.</p>
+      </div>
+
+      ${updates}
+
+      <div class="sec">
+        <h2>سياسة تحديث المكتبة</h2>
+        <ul>
+          <li>المصدر الأول: الجريدة الرسمية والوقائع المصرية والمصادر القضائية أو النقابية الرسمية عند توافرها.</li>
+          <li>تسجيل رقم القانون أو القرار أو الطعن، وتاريخ النشر، وتاريخ النفاذ إن وجد.</li>
+          <li>تحديد النص السابق الذي عُدّل أو أُلغي، وعدم عرض النص القديم باعتباره ساريًا.</li>
+          <li>تمييز «مشروع قانون» عن «قانون صادر» وعن «قانون نافذ».</li>
+          <li>إذا تعذر التحقق من الأصل الرسمي، يظهر ذلك للمستخدم بدل تخمين المعلومة.</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <h2>أحكام النقض</h2>
+        <p>سيُعرض رقم الطعن والدائرة وتاريخ الجلسة والمبدأ القانوني ورابط الحكم أو مصدر نشره عند توافره من مصدر قضائي يمكن التحقق منه.</p>
+        <p class="sub">في هذا التحديث لم تتم إضافة حكم نقض جديد لأنني لم أتحقق من حكم رسمي متاح بما يكفي لإدراجه دون مخاطرة بالخطأ.</p>
+      </div>
+
+      <div class="notice">الأولوية للمصادر الرسمية. التحديثات المعروضة هنا توصيات إدراج داخل «مستشارك»، وليست استشارة قانونية ولا بديلًا عن النص الرسمي أو المحامي المختص.</div>
+    </section>`;
+  },
+  lawyers() {
+    return `<section class="view">${backBtn('home')}<h1 data-focus>دليل المحامين</h1><p class="lead">ابحث مستقبلًا عن محامٍ بحسب التخصص والمحافظة ونطاق العمل.</p>
+      <div class="sec"><h2>كيف سيتم الترشيح؟</h2><ul><li>التخصص القانوني المرتبط بالمشكلة.</li><li>المحافظة أو المنطقة التي يفضلها طالب الخدمة.</li><li>بيانات القيد والتواصل بعد التحقق وموافقة المحامي على النشر.</li><li>إظهار معايير الترشيح بوضوح، دون ترتيب مدفوع خفي.</li></ul></div>
+      <div class="notice">لا توجد حاليًا قائمة محامين موثقة أو أرقام تواصل معتمدة داخل هذه النسخة. لن نختلق أسماء أو أرقامًا.</div></section>`;
+  },
+
+  question() {
+    const cat = KnowledgeService.category(S.catId);
+    const node = KnowledgeService.node(cat, S.nodeId);
+    const n = S.answers.length;
+    const total = 1 + n + KnowledgeService.depth(cat, S.nodeId);
+    const current = n + 2;
+    const pct = Math.round(((current - 1) / total) * 100);
+    const opts = node.opts.map((op, i) =>
+      `<button class="btn opt ${S.pendingOpt === i ? 'sel' : ''}" type="button" data-action="answer" data-idx="${i}" aria-pressed="${S.pendingOpt === i}"><span class="dot"></span><span>${esc(op.t)}</span></button>`).join('');
+    return `<section class="view">
+      ${backBtn('q-back')}
+      <div class="progress">
+        <div class="progress-meta"><span>قسم «${esc(cat.label)}»</span><span>الخطوة ${current} من حوالي ${total}</span></div>
+        <div class="track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="التقدم في الأسئلة"><div class="fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="qcard">
+        <h2 data-focus>${esc(node.q)}</h2>
+        ${node.help ? `<p class="help">${esc(node.help)}</p>` : ''}
+        <div class="stack" role="group" aria-label="خيارات الإجابة">${opts}</div>
+      </div>
+      <div class="actions"><button class="btn btn-primary" type="button" data-action="next-question" ${S.pendingOpt === null ? 'disabled' : ''}>التالي</button></div>
+    </section>`;
+  },
+
+  free() {
+    return `<section class="view">
+      ${backBtn('home')}
+      <div class="stack">
+        <h1 data-focus>اكتب مشكلتك</h1>
+        <p class="lead">احكِ ما حدث بكلماتك. كلما ذكرت تواريخ وأطرافًا ومستندات، كان الفهم أفضل.</p>
+      </div>
+      <details class="tips">
+        <summary>ماذا أكتب؟</summary>
+        <ul>
+          <li>ماذا حدث ومتى بدأ الموضوع؟</li>
+          <li>من الأطراف المعنية وما علاقتك بهم؟</li>
+          <li>ما الأوراق أو الرسائل التي لديك؟</li>
+          <li>ماذا تريد أن تصل إليه؟</li>
+        </ul>
+      </details>
+      <div class="stack">
+        <label for="story" style="font-weight:600">قصتك</label>
+        <textarea id="story" placeholder="مثال: أعمل في شركة منذ ثلاث سنوات، وأخبرني المدير شفهيًا أنني مفصول، ولم أستلم راتب الشهر الماضي...">${esc(S.text)}</textarea>
+        <div class="counter"><span id="story-count"></span><span id="story-err" class="err" role="alert"></span></div>
+        <button class="btn btn-primary" type="button" data-action="analyze-text"><span>حلّل موقفي</span>${ARROW}</button>
+      </div>
+      <button class="link" type="button" data-action="start-guided">أفضّل الإجابة عن أسئلة موجّهة</button>
+    </section>`;
+  },
+
+  loading() {
+    return `<section class="view"><div class="loading" role="status"><div class="spin"></div><p data-focus tabindex="-1">جارٍ تحليل موقفك...</p></div></section>`;
+  },
+
+  result() {
+    const r = S.result;
+    const li = (a) => a.map((x) => `<li>${esc(x)}</li>`).join('');
+    const urgentMsg = r.urgent === 'high'
+      ? 'هذه المسألة قد تكون عالية الخطورة. يُنصح بالتواصل مع محامٍ مؤهل في أقرب وقت ممكن، وعدم اتخاذ أي خطوة رسمية قبل فهم موقفك.'
+      : r.urgent === 'time'
+        ? 'بعض ما ذكرته يشير إلى أن الوقت قد يكون مهمًا (مواعيد أو إجراءات قريبة). لا تؤجل عرض الموقف على محامٍ مؤهل.'
+        : '';
+    const demoMsg = r.mode === 'guided'
+      ? 'هذه النتيجة مبنية على إجاباتك وعلى بيانات تجريبية داخل التطبيق، وليست حكمًا قانونيًا.'
+      : 'هذا تحليل تجريبي يعتمد على كلمات مفتاحية في نصك فقط، وليس ذكاءً اصطناعيًا ولا حكمًا قانونيًا.';
+    const docs = r.docs.map((d, i) =>
+      `<label class="check"><input type="checkbox" data-doc="${i}" ${S.checked[d] ? 'checked' : ''}><span>${esc(d)}</span></label>`).join('');
+    const answerDetails = (r.answerDetails || []).map(a => `<div class="answer-item"><strong>${esc(a.question)}</strong><span>${esc(a.answer)}</span></div>`).join('');
+    const firstStep = r.steps && r.steps.length ? r.steps[0] : 'استكمل المعلومات الناقصة قبل اتخاذ إجراء.';
+    return `<section class="view">
+      <div class="stack">
+        <h1 data-focus>نتيجة التحليل الأولي</h1>
+        <p class="demo-note">${demoMsg}</p>
+        ${urgentMsg ? `<p class="notice" role="alert"><strong>تنبيه:</strong> ${urgentMsg}</p>` : ''}
+      </div>
+
+      <section class="summary-highlight" aria-labelledby="h-quick">
+        <h2 id="h-quick">الخلاصة في دقيقة</h2>
+        <p><strong>الموضوع:</strong> ${esc(r.classification.text)}</p>
+        <p><strong>ما ينبغي فعله أولًا:</strong> ${esc(firstStep)}</p>
+        <p><strong>المعلومات المطلوب استكمالها:</strong> ${r.missing.length ? `هناك ${r.missing.length} نقطة تحتاج إلى توضيح.` : 'لا تظهر نقاط أساسية ناقصة في هذه المرحلة.'}</p>
+      </section>
+
+      <section class="sec" aria-labelledby="h-sum">
+        <h2 id="h-sum">ملخص موقفك</h2>
+        <ul>${li(r.summary)}</ul>
+        ${r.excerpt ? `<div class="quote">${esc(r.excerpt)}</div>` : ''}
+      </section>
+
+      ${answerDetails ? `<section class="sec" aria-labelledby="h-answers"><h2 id="h-answers">إجاباتك كما سجلتها</h2><div class="answer-list">${answerDetails}</div></section>` : ''}
+
+      <section class="sec" aria-labelledby="h-cls">
+        <h2 id="h-cls">التصنيف القانوني المحتمل</h2>
+        <p class="class-main">${esc(r.classification.text)}</p>
+        ${r.classification.note ? `<p>${esc(r.classification.note)}</p>` : ''}
+        <p class="sub">هذا تصنيف مبدئي وقد يتغير بعد استكمال المعلومات.</p>
+      </section>
+
+      <section class="sec" aria-labelledby="h-mis">
+        <h2 id="h-mis">المعلومات الناقصة</h2>
+        ${r.missing.length
+          ? `<p class="sub">كلما استكملت هذه النقاط، أصبح الفهم أدق:</p><ul class="missing">${li(r.missing)}</ul>`
+          : '<p>لا توجد نقاط ناقصة ظاهرة بناءً على إجاباتك، لكن التفاصيل الدقيقة تحتاج مراجعة متخصص.</p>'}
+      </section>
+
+      <section class="sec" aria-labelledby="h-stp">
+        <h2 id="h-stp">الخطوات الأولية المحتملة</h2>
+        <p class="sub">خطوات عامة قد تفيدك، وليست حلًا قانونيًا نهائيًا لحالتك.</p>
+        <ol>${li(r.steps)}</ol>
+      </section>
+
+      <section class="sec" aria-labelledby="h-doc">
+        <h2 id="h-doc">المستندات المهمة</h2>
+        <p class="sub">علّم على ما لديك فعلًا. <span id="doc-count"></span></p>
+        <div class="checks">${docs}</div>
+      </section>
+
+      <section class="disclaimer" aria-labelledby="h-dis">
+        <h2 id="h-dis">تنبيه قانوني</h2>
+        <p>المعلومات المعروضة هنا معلومات أولية وعامة، وليست بديلًا عن استشارة محامٍ مؤهل. لا تعتمد عليها وحدها في اتخاذ قرار، خصوصًا في المسائل العاجلة أو عالية الخطورة مثل المواعيد القريبة أو الاتهامات الجنائية أو الإخلاء.</p>
+        <p>هذه نسخة تجريبية تستخدم بيانات توضيحية، وليست قاعدة قانونية حقيقية.</p>
+      </section>
+
+      <div class="actions">
+        <button class="btn btn-inline" type="button" data-action="print-summary">طباعة / حفظ الملخص PDF</button>
+        <button class="btn btn-inline" type="button" data-action="result-edit">${r.mode === 'guided' ? 'تعديل إجاباتي' : 'تعديل النص'}</button>
+        <button class="btn btn-primary btn-inline" type="button" data-action="restart">ابدأ استشارة جديدة</button>
+      </div>
+    </section>`;
+  }
+};
+
+function render() {
+  $view.innerHTML = views[S.view]();
+  const h = $view.querySelector('[data-focus]');
+  if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+  window.scrollTo({ top: 0 });
+  if (S.view === 'free') updateCounter();
+  if (S.view === 'result') updateDocCount();
+}
+
+function go(view) { S.view = view; render(); }
+
+function updateCounter() {
+  const el = document.getElementById('story-count');
+  if (!el) return;
+  const len = S.text.trim().length;
+  el.textContent = len ? `${len} حرفًا` : 'ابدأ الكتابة...';
+}
+function updateDocCount() {
+  const el = document.getElementById('doc-count');
+  if (!el) return;
+  const have = S.result.docs.filter((d) => S.checked[d]).length;
+  el.textContent = `لديك ${have} من ${S.result.docs.length}.`;
+}
+
+async function finishGuided() {
+  S.view = 'loading'; render();
+  const [res] = await Promise.all([
+    AnalysisService.analyzeGuided({ catId: S.catId, answers: S.answers }),
+    new Promise((r) => setTimeout(r, 500))
+  ]);
+  const cat = KnowledgeService.category(S.catId);
+  res.answerDetails = S.answers.map(a => ({ question: cat.nodes[a.nodeId]?.q || 'سؤال', answer: cat.nodes[a.nodeId]?.opts[a.optIdx]?.t || 'إجابة' }));
+  S.result = res; S.checked = {}; go('result');
+}
+
+async function runText() {
+  const err = document.getElementById('story-err');
+  if (S.text.trim().length < 25) { err.textContent = 'اكتب بضع جمل على الأقل (٢٥ حرفًا) ليتمكن النظام من فهم موقفك.'; return; }
+  S.view = 'loading'; render();
+  const [res] = await Promise.all([AnalysisService.analyzeText(S.text), new Promise((r) => setTimeout(r, 700))]);
+  S.result = res; S.checked = {}; go('result');
+}
+
+const actions = {
+  home() { S.catId = null; S.nodeId = null; S.answers = []; S.pendingOpt = null; go('welcome'); },
+  library() { go('library'); },
+  lawyers() { go('lawyers'); },
+  'search-home'() { const q = document.getElementById('home-search')?.value.trim() || ''; if (!q) { go('categories'); return; } S.text = q; go('free'); },
+  common(t) { S.text = t.dataset.text || ''; const cat = KnowledgeService.category(t.dataset.cat); S.catId = cat.id; S.nodeId = cat.start; S.answers = []; S.pendingOpt = null; go('question'); },
+  'start-guided'() { S.answers = []; S.pendingOpt = null; go('categories'); },
+  'start-free'() { go('free'); },
+  'pick-cat'(t) {
+    const cat = KnowledgeService.category(t.dataset.id);
+    S.catId = cat.id; S.nodeId = cat.start; S.answers = []; S.pendingOpt = null; go('question');
+  },
+  answer(t) {
+    if (S.busy) return;
+    S.pendingOpt = Number(t.dataset.idx);
+    render();
+  },
+  'next-question'() {
+    if (S.busy || S.pendingOpt === null) return;
+    const cat = KnowledgeService.category(S.catId);
+    const idx = S.pendingOpt;
+    const op = cat.nodes[S.nodeId].opts[idx];
+    S.answers.push({ nodeId: S.nodeId, optIdx: idx });
+    S.pendingOpt = null;
+    if (op.next) { S.nodeId = op.next; render(); } else finishGuided();
+  },
+  'q-back'() {
+    if (S.pendingOpt !== null) { S.pendingOpt = null; render(); return; }
+    if (S.answers.length) S.nodeId = S.answers.pop().nodeId;
+    else { go('categories'); return; }
+    S.pendingOpt = null;
+    render();
+  },
+  'analyze-text'() { runText(); },
+  'print-summary'() { window.print(); },
+  'result-edit'() {
+    if (S.result.mode === 'guided') { S.nodeId = S.answers.pop().nodeId; S.pendingOpt = null; go('question'); } else go('free');
+  },
+  restart() { S.catId = null; S.nodeId = null; S.answers = []; S.pendingOpt = null; S.text = ''; S.result = null; go('welcome'); }
+};
+
+document.getElementById('app').addEventListener('click', (e) => {
+  const t = e.target.closest('[data-action]');
+  if (t && actions[t.dataset.action]) actions[t.dataset.action](t);
+});
+document.getElementById('app').addEventListener('input', (e) => {
+  if (e.target.id === 'home-search') {
+    const q = norm(e.target.value);
+    document.querySelectorAll('#home-categories [data-id]').forEach(b => { b.hidden = !!q && !norm(b.textContent).includes(q); });
+  }
+  if (e.target.id === 'story') {
+    S.text = e.target.value; updateCounter();
+    const err = document.getElementById('story-err'); if (err) err.textContent = '';
+  }
+});
+document.getElementById('app').addEventListener('change', (e) => {
+  if (e.target.matches('[data-doc]')) {
+    S.checked[S.result.docs[Number(e.target.dataset.doc)]] = e.target.checked; updateDocCount();
+  }
+});
+
+render();
+</script>
+
+
+<script>
+// PWA: register the offline app shell when served over HTTPS or localhost.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch((error) => {
+      console.warn('تعذر تفعيل وضع التطبيق:', error);
+    });
+  });
+}
+</script>
+</body></html>
